@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
 import 'components/animated_btn.dart';
+import 'components/custom_sign_in_dialog.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -13,6 +14,7 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+  bool isSignInDialogShown = false;
   late RiveAnimationController _btnAnimationController;
 
   @override
@@ -46,87 +48,67 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: const SizedBox(),
             ),
           ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Spacer(),
-                  SizedBox(
-                    width: 260,
-                    child: Column(
-                      children: const [
-                        Text(
-                          "Sua aprovação na palma da sua mão",
-                          style: TextStyle(
-                            fontSize: 45,
-                            fontFamily: "Poppins",
-                            height: 1.2,
+          AnimatedPositioned(
+            top: isSignInDialogShown ? -50 : 0,
+            duration: const Duration(milliseconds: 240),
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Spacer(),
+                    SizedBox(
+                      width: 260,
+                      child: Column(
+                        children: const [
+                          Text(
+                            "Sua aprovação na palma da sua mão",
+                            style: TextStyle(
+                              fontSize: 45,
+                              fontFamily: "Poppins",
+                              height: 1.2,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 16),
-                        Text(
-                          '''Resolva milhares de questões comentadas, veja seu desempenho, receba lembretes e interaja com outros 'smarts' como você''',
-                        ),
-                      ],
+                          SizedBox(height: 16),
+                          Text(
+                            '''Resolva milhares de questões comentadas, veja seu desempenho, receba lembretes e interaja com outros 'smarts' como você''',
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const Spacer(flex: 2),
-                  AnimatedBtn(
-                    btnAnimationController: _btnAnimationController,
-                    press: () {
-                      _btnAnimationController.isActive = true;
-                      showGeneralDialog(
-                        barrierDismissible: true,
-                        barrierLabel: "Sign In",
-                        context: context,
-                        pageBuilder: (context, _, __) => Center(
-                          child: Container(
-                            height: 620,
-                            margin: const EdgeInsets.symmetric(horizontal: 16),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24,
-                              vertical: 32,
-                            ),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(40),
-                              ),
-                            ),
-                            child: Scaffold(
-                              backgroundColor: Colors.transparent,
-                              body: Column(
-                                children: const [
-                                  Text(
-                                    "Sign In",
-                                    style: TextStyle(
-                                      fontSize: 34,
-                                      fontFamily: "Poppins",
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 16),
-                                    child: Text(
-                                      "Resolva milhares de questões comentadas e avalie seu progresso e sua posição no ranking",
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 24),
-                    child: Text(
-                        "Seja Smart Premium e tenha acesso a +20 recursos exclusivos para impulsionar sua aprovação."),
-                  ),
-                ],
+                    const Spacer(flex: 2),
+                    AnimatedBtn(
+                      btnAnimationController: _btnAnimationController,
+                      press: () {
+                        _btnAnimationController.isActive = true;
+                        Future.delayed(
+                          const Duration(milliseconds: 800),
+                          () {
+                            setState(() {
+                              isSignInDialogShown = true;
+                            });
+                            CustomSignInDialog(
+                              context,
+                              onClosed: (_) {
+                                setState(() {
+                                  isSignInDialogShown = false;
+                                });
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 24),
+                      child: Text(
+                          "Seja Smart Premium e tenha acesso a +20 recursos exclusivos para impulsionar sua aprovação."),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
