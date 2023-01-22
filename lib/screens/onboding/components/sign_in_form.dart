@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rive/rive.dart';
-import 'package:rive_animation/screens/entry_point.dart';
+import 'package:rive_animation/entry_point.dart';
 
 import '../../../utils/rive_utils.dart';
 
