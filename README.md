@@ -1,6 +1,6 @@
 # rive_animation
 
-A new Flutter project.
+A UX/UI Flutter project with Rive that uses amazing animations and design.
 
 ## Getting Started
 
