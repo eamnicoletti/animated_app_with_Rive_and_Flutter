@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../models/models/course.dart';
+import '../../../models/course.dart';
 
 class CourseCard extends StatelessWidget {
   const CourseCard({
