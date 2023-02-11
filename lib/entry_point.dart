@@ -16,10 +16,44 @@ class EntryPoint extends StatefulWidget {
   State<EntryPoint> createState() => _EntryPointState();
 }
 
-class _EntryPointState extends State<EntryPoint> {
+class _EntryPointState extends State<EntryPoint>
+    with SingleTickerProviderStateMixin {
   RiveAsset selectedBottomNav = bottomNavs.first;
+
+  late AnimationController _animationController;
+  late Animation<double> animation;
+  late Animation<double> scalAnimation;
+
   late SMIBool isSideBarClosed;
   bool isSideMenuClosed = true;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    )..addListener(() {
+        setState(() {});
+      });
+
+    animation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+          parent: _animationController, curve: Curves.fastOutSlowIn),
+    );
+
+    scalAnimation = Tween<double>(begin: 1, end: 0.8).animate(
+      CurvedAnimation(
+          parent: _animationController, curve: Curves.fastOutSlowIn),
+    );
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,18 +64,18 @@ class _EntryPointState extends State<EntryPoint> {
       body: Stack(
         children: [
           AnimatedPositioned(
-            duration: Duration(milliseconds: 200),
+            duration: const Duration(milliseconds: 200),
             curve: Curves.fastOutSlowIn,
             width: 288,
             left: isSideMenuClosed ? -288 : 0,
             height: MediaQuery.of(context).size.height,
-            child: SideMenu(),
+            child: const SideMenu(),
           ),
           Transform.translate(
-            offset: Offset(isSideMenuClosed ? 0 : 288, 0),
+            offset: Offset(animation.value * 288, 0),
             child: Transform.scale(
-              scale: isSideMenuClosed ? 1 : 0.8,
-              child: ClipRRect(
+              scale: scalAnimation.value,
+              child: const ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(24)),
                 child: HomeScreen(),
               ),
@@ -58,6 +92,11 @@ class _EntryPointState extends State<EntryPoint> {
             },
             press: () {
               isSideBarClosed.value = !isSideBarClosed.value;
+              if (isSideMenuClosed) {
+                _animationController.forward();
+              } else {
+                _animationController.reverse();
+              }
               setState(() {
                 isSideMenuClosed = isSideBarClosed.value;
               });
