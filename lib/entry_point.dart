@@ -5,6 +5,7 @@ import 'package:rive_animation/screens/home/home_screen.dart';
 import 'package:rive_animation/utils/rive_utils.dart';
 
 import 'components/animated_bar.dart';
+import 'components/menu_btn.dart';
 import 'models/rive_asset.dart';
 
 class EntryPoint extends StatefulWidget {
@@ -16,13 +17,31 @@ class EntryPoint extends StatefulWidget {
 
 class _EntryPointState extends State<EntryPoint> {
   RiveAsset selectedBottomNav = bottomNavs.first;
+  late SMIBool isSideBarClosed;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBody: true,
-      body: const HomeScreen(),
+      body: Stack(
+        children: [
+          const HomeScreen(),
+          MenuBtn(
+            riveOnInit: (artboard) {
+              StateMachineController controller = RiveUtils.getRiveController(
+                artboard,
+                stateMachineName: "State Machine",
+              );
+              isSideBarClosed = controller.findSMI("isOpen") as SMIBool;
+              isSideBarClosed.value = true;
+            },
+            press: () {
+              isSideBarClosed.value = !isSideBarClosed.value;
+            },
+          ),
+        ],
+      ),
       bottomNavigationBar: SafeArea(
         child: Container(
           padding: const EdgeInsets.all(12),

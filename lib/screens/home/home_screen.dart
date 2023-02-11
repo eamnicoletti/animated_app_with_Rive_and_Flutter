@@ -75,10 +75,10 @@ class SecondaryCourseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: BoxDecoration(
         color: course.bgColor,
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
       child: Row(
         children: [
@@ -92,7 +92,7 @@ class SecondaryCourseCard extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                 ),
-                Text(
+                const Text(
                   "Assistir video - 15 min",
                   style: TextStyle(
                     color: Colors.white60,
@@ -102,13 +102,13 @@ class SecondaryCourseCard extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 40,
             child: VerticalDivider(
               color: Colors.white70,
             ),
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           SvgPicture.asset(course.iconSrc),
         ],
       ),
