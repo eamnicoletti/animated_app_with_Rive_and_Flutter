@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rive_animation/screens/onboding/components/sign_in_form.dart';
 
+// ignore: non_constant_identifier_names
 Future<Object?> CustomSignInDialog(
   BuildContext context, {
   required ValueChanged onClosed,

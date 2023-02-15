@@ -90,7 +90,7 @@ class _EntryPointState extends State<EntryPoint>
             ),
           ),
           AnimatedPositioned(
-            duration: Duration(milliseconds: 200),
+            duration: const Duration(milliseconds: 200),
             curve: Curves.fastOutSlowIn,
             left: isSideMenuClosed ? 0 : 220,
             top: 16,

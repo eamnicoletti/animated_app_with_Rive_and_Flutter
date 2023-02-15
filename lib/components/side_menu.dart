@@ -27,7 +27,7 @@ class _SideMenuState extends State<SideMenu> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InfoCard(
+              const InfoCard(
                 name: "Emilio Nicoletti",
                 profession: "Coder",
               ),
@@ -52,7 +52,7 @@ class _SideMenuState extends State<SideMenu> {
                   },
                   press: () {
                     menu.input!.change(true);
-                    Future.delayed(Duration(seconds: 1), () {
+                    Future.delayed(const Duration(seconds: 1), () {
                       menu.input!.change(false);
                     });
                     setState(() {
@@ -83,7 +83,7 @@ class _SideMenuState extends State<SideMenu> {
                   },
                   press: () {
                     menu.input!.change(true);
-                    Future.delayed(Duration(seconds: 1), () {
+                    Future.delayed(const Duration(seconds: 1), () {
                       menu.input!.change(false);
                     });
                     setState(() {
