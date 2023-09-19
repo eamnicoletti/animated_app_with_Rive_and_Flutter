@@ -60,10 +60,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Spacer(),
-                    SizedBox(
-                      width: 260,
+                    const SizedBox(
+                      width: 280,
                       child: Column(
-                        children: const [
+                        children: [
                           Text(
                             "Sua aprovação na palma da sua mão",
                             style: TextStyle(

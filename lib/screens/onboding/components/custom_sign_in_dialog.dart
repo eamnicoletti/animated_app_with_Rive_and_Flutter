@@ -9,7 +9,7 @@ Future<Object?> CustomSignInDialog(
 }) {
   return showGeneralDialog(
     barrierDismissible: true,
-    barrierLabel: "Sign In",
+    barrierLabel: "Entrar",
     context: context,
     transitionDuration: const Duration(milliseconds: 400),
     transitionBuilder: (_, animation, __, child) {
@@ -27,11 +27,11 @@ Future<Object?> CustomSignInDialog(
     },
     pageBuilder: (context, _, __) => Center(
       child: Container(
-        height: 620,
+        height: 640,
         margin: const EdgeInsets.symmetric(horizontal: 16),
         padding: const EdgeInsets.symmetric(
           horizontal: 24,
-          vertical: 32,
+          // vertical: 30,
         ),
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.94),
@@ -46,8 +46,9 @@ Future<Object?> CustomSignInDialog(
             children: [
               Column(
                 children: [
+                  const SizedBox(height: 26),
                   const Text(
-                    "Sign In",
+                    "Entrar",
                     style: TextStyle(
                       fontSize: 34,
                       fontFamily: "Poppins",
@@ -61,8 +62,8 @@ Future<Object?> CustomSignInDialog(
                     ),
                   ),
                   const SignInForm(),
-                  Row(
-                    children: const [
+                  const Row(
+                    children: [
                       Expanded(child: Divider()),
                       Padding(
                         padding: EdgeInsets.symmetric(
@@ -122,7 +123,7 @@ Future<Object?> CustomSignInDialog(
               const Positioned(
                 left: 0,
                 right: 0,
-                bottom: -48,
+                bottom: -18,
                 child: CircleAvatar(
                   radius: 16,
                   backgroundColor: Colors.white,
