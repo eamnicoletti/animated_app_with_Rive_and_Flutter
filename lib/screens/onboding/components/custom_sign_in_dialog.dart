@@ -40,6 +40,7 @@ Future<Object?> CustomSignInDialog(
           ),
         ),
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,
           body: Stack(
             clipBehavior: Clip.none,
