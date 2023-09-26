@@ -1,10 +1,9 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
-
-import 'components/animated_btn.dart';
-import 'components/custom_sign_in_dialog.dart';
+import 'package:rive_animation/screens/onboding/components/custom_sign_in_dialog.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -16,11 +15,20 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   bool isSignInDialogShown = false;
   late RiveAnimationController _btnAnimationController;
+  late Image bkgImage;
 
   @override
   void initState() {
     _btnAnimationController = OneShotAnimation("active", autoplay: false);
+    bkgImage = Image.asset("assets/Backgrounds/logo.png");
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    precacheImage(bkgImage.image, context);
   }
 
   @override
@@ -29,13 +37,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: Stack(
         children: [
           Positioned(
-              width: MediaQuery.of(context).size.width * 1.7,
-              bottom: 200,
-              left: 100,
-              child: Image.asset("assets/Backgrounds/Spline.png")),
+            width: MediaQuery.of(context).size.width * 0.8,
+            bottom: 220,
+            left: 130,
+            child: bkgImage,
+          ),
           Positioned.fill(
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 10),
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 20),
             ),
           ),
           const RiveAnimation.asset(
@@ -80,13 +89,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
                     const Spacer(flex: 2),
-                    AnimatedBtn(
-                      btnAnimationController: _btnAnimationController,
-                      press: () {
-                        _btnAnimationController.isActive = true;
-                        Future.delayed(
-                          const Duration(milliseconds: 800),
-                          () {
+                    SizedBox(
+                      height: 64,
+                      width: 200,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(42),
+                            ),
+                          ),
+                          onPressed: () {
+                            _btnAnimationController.isActive = true;
+
                             setState(() {
                               isSignInDialogShown = true;
                             });
@@ -99,9 +114,45 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               },
                             );
                           },
-                        );
-                      },
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                CupertinoIcons.arrow_right,
+                                color: Colors.black87,
+                              ),
+                              SizedBox(width: 8),
+                              Text(
+                                "Comece agora",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87),
+                              ),
+                            ],
+                          )),
                     ),
+                    // AnimatedBtn(
+                    //   btnAnimationController: _btnAnimationController,
+                    //   press: () {
+                    //     _btnAnimationController.isActive = true;
+                    //     Future.delayed(
+                    //       const Duration(milliseconds: 800),
+                    //       () {
+                    //         setState(() {
+                    //           isSignInDialogShown = true;
+                    //         });
+                    //         CustomSignInDialog(
+                    //           context,
+                    //           onClosed: (_) {
+                    //             setState(() {
+                    //               isSignInDialogShown = false;
+                    //             });
+                    //           },
+                    //         );
+                    //       },
+                    //     );
+                    //   },
+                    // ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 24),
                       child: Text(
