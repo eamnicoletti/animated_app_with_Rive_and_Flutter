@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
@@ -121,65 +122,90 @@ class _EntryPointState extends State<EntryPoint>
       bottomNavigationBar: Transform.translate(
         offset: Offset(0, 100 * animation.value),
         child: SafeArea(
+          bottom: false,
           child: Container(
-            padding: const EdgeInsets.all(12),
-            margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+            margin: const EdgeInsets.only(left: 24, right: 24, bottom: 16),
             decoration: BoxDecoration(
-              color: backgroundColor2.withOpacity(0.8),
               borderRadius: const BorderRadius.all(Radius.circular(24)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ...List.generate(
-                  bottomNavs.length,
-                  (index) => GestureDetector(
-                    onTap: () {
-                      bottomNavs[index].input!.change(true);
-
-                      if (bottomNavs[index] != selectedBottomNav) {
-                        setState(() {
-                          selectedBottomNav = bottomNavs[index];
-                        });
-                      }
-
-                      Future.delayed(const Duration(seconds: 1), () {
-                        bottomNavs[index].input!.change(false);
-                      });
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        AnimatedBar(
-                            isActive: bottomNavs[index] == selectedBottomNav),
-                        SizedBox(
-                          height: 36,
-                          width: 36,
-                          child: Opacity(
-                            opacity: bottomNavs[index] == selectedBottomNav
-                                ? 1
-                                : 0.5,
-                            child: RiveAnimation.asset(
-                              bottomNavs.first.src,
-                              artboard: bottomNavs[index].artboard,
-                              onInit: (artboard) {
-                                StateMachineController controller =
-                                    RiveUtils.getRiveController(
-                                  artboard,
-                                  stateMachineName:
-                                      bottomNavs[index].stateMachineName,
-                                );
-                                bottomNavs[index].input =
-                                    controller.findSMI("active") as SMIBool;
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+              boxShadow: [
+                BoxShadow(
+                  color: backgroundColor2.withValues(alpha: 0.3),
+                  offset: const Offset(0, 20),
+                  blurRadius: 20,
                 ),
               ],
+            ),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(24)),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: backgroundColor2.withValues(alpha: 0.4),
+                    borderRadius: const BorderRadius.all(Radius.circular(24)),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.1),
+                      width: 1,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ...List.generate(
+                        bottomNavs.length,
+                        (index) => GestureDetector(
+                          onTap: () {
+                            bottomNavs[index].input!.change(true);
+
+                            if (bottomNavs[index] != selectedBottomNav) {
+                              setState(() {
+                                selectedBottomNav = bottomNavs[index];
+                              });
+                            }
+
+                            Future.delayed(const Duration(seconds: 1), () {
+                              bottomNavs[index].input!.change(false);
+                            });
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              AnimatedBar(
+                                  isActive:
+                                      bottomNavs[index] == selectedBottomNav),
+                              SizedBox(
+                                height: 36,
+                                width: 36,
+                                child: Opacity(
+                                  opacity:
+                                      bottomNavs[index] == selectedBottomNav
+                                          ? 1
+                                          : 0.5,
+                                  child: RiveAnimation.asset(
+                                    bottomNavs.first.src,
+                                    artboard: bottomNavs[index].artboard,
+                                    onInit: (artboard) {
+                                      StateMachineController controller =
+                                          RiveUtils.getRiveController(
+                                        artboard,
+                                        stateMachineName:
+                                            bottomNavs[index].stateMachineName,
+                                      );
+                                      bottomNavs[index].input = controller
+                                          .findSMI("active") as SMIBool;
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
         ),
