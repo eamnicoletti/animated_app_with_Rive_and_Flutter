@@ -38,18 +38,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           Positioned(
             width: MediaQuery.of(context).size.width * 0.8,
-            bottom: 220,
+            bottom: 250,
             left: 130,
-            child: bkgImage,
+            child: Opacity(opacity: 0.7, child: bkgImage),
           ),
           Positioned.fill(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 20),
             ),
           ),
-          const RiveAnimation.asset(
-            "assets/RiveAssets/shapes.riv",
-            fit: BoxFit.cover,
+          const Opacity(
+            opacity: 0.7,
+            child: RiveAnimation.asset(
+              "assets/RiveAssets/shapes.riv",
+              fit: BoxFit.cover,
+            ),
           ),
           Positioned.fill(
             child: BackdropFilter(
@@ -78,7 +81,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             style: TextStyle(
                               fontSize: 45,
                               fontFamily: "Poppins",
-                              height: 1.2,
+                              height: 1,
                             ),
                           ),
                           SizedBox(height: 16),
