@@ -16,9 +16,8 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 40),
               Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.fromLTRB(20, 70, 20, 6),
                 child: Text(
                   "Cursos",
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
@@ -32,16 +31,19 @@ class HomeScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     ...courses
-                        .map((course) => Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: CourseCard(course: course),
+                        .asMap()
+                        .entries
+                        .map((entry) => Padding(
+                              padding: EdgeInsets.only(
+                                  left: entry.key == 0 ? 20 : 10),
+                              child: CourseCard(course: entry.value),
                             ))
                         .toList()
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 6),
                 child: Text(
                   "Recentes",
                   style: Theme.of(context)
@@ -52,7 +54,7 @@ class HomeScreen extends StatelessWidget {
               ),
               ...recentCourses.map((course) => Padding(
                     padding:
-                        const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                        const EdgeInsets.only(left: 20, right: 20, bottom: 10),
                     child: SecondaryCourseCard(
                       course: course,
                     ),
